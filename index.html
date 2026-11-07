@@ -1,0 +1,315 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inès | My Bubbles</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --pink:#ff79ad;
+  --deep:#b83e78;
+  --light:#fff0f6;
+  --purple:#b7a0ff;
+}
+* {box-sizing:border-box;margin:0;padding:0}
+body {
+  font-family:'Tajawal',sans-serif;
+  color:#713650;
+  min-height:100vh;
+  overflow-x:hidden;
+  background:linear-gradient(135deg,#fff0f6,#f9e8ff,#ffe5ef);
+}
+button {font-family:inherit;cursor:pointer}
+.background {
+  position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0;
+}
+.bubble {
+  position:absolute;bottom:-100px;border-radius:50%;
+  background:rgba(255,255,255,.35);
+  border:1px solid rgba(255,255,255,.8);
+  box-shadow:inset 0 0 15px #fff8,0 0 20px #ffb4d5;
+  animation:rise linear infinite;
+}
+@keyframes rise {
+  to {transform:translateY(-120vh) translateX(50px);opacity:0}
+}
+header {
+  position:relative;z-index:2;text-align:center;padding:25px 15px 8px;
+}
+.brand {
+  font-size:13px;letter-spacing:5px;color:#c16c96;font-weight:700;
+}
+.brand span {color:#e77ba9}
+.progress {
+  width:min(250px,70%);height:5px;background:#ffffffa8;
+  border-radius:20px;margin:18px auto;
+  overflow:hidden;
+}
+.progress-fill {
+  height:100%;width:20%;background:linear-gradient(90deg,#ff8cba,#bd8aff);
+  border-radius:20px;transition:width .5s;
+}
+main {
+  position:relative;z-index:1;min-height:78vh;
+  display:flex;align-items:center;justify-content:center;padding:20px;
+}
+.scene {
+  display:none;width:min(650px,100%);text-align:center;
+  animation:enter .8s ease both;
+}
+.scene.active {display:block}
+@keyframes enter {
+  from {opacity:0;transform:translateY(25px) scale(.97)}
+  to {opacity:1;transform:translateY(0) scale(1)}
+}
+.number {
+  color:#c17a9a;font-size:12px;letter-spacing:4px;margin-bottom:15px;
+}
+h1 {
+  font-family:'Amiri',serif;font-size:clamp(38px,9vw,65px);
+  color:#b94379;line-height:1.4;text-shadow:0 4px 20px #ffbad655;
+}
+h2 {
+  font-family:'Amiri',serif;font-size:clamp(29px,7vw,43px);
+  color:#b94379;margin-bottom:13px;
+}
+.subtitle {color:#bd7c9a;letter-spacing:2px;font-size:13px;margin:5px 0 20px}
+.art {
+  width:min(245px,65vw);height:245px;max-height:65vw;
+  margin:18px auto 22px;position:relative;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:45% 55% 50% 50%;
+  background:linear-gradient(145deg,#fff,#ffe1ef);
+  box-shadow:12px 15px 35px #d58aa344,-8px -8px 25px #fff;
+  transform-style:preserve-3d;
+  animation:float 4s ease-in-out infinite;
+}
+.art::before {
+  content:"";position:absolute;inset:12px;border-radius:inherit;
+  border:1px solid #fff;
+}
+.art img {
+  width:85%;height:85%;object-fit:contain;
+  filter:drop-shadow(0 12px 10px #bd699433);
+  position:relative;z-index:1;
+}
+@keyframes float {
+  0%,100%{transform:translateY(0) rotate(-2deg)}
+  50%{transform:translateY(-12px) rotate(2deg)}
+}
+.description {
+  font-family:'Amiri',serif;
+  font-size:clamp(21px,5vw,27px);
+  line-height:2;color:#75445d;
+  max-width:520px;margin:0 auto;
+}
+.description strong {color:#c34e83}
+.small {
+  color:#b77c97;font-size:14px;margin-top:13px;line-height:1.9;
+}
+.actions {
+  display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:27px;
+}
+.btn {
+  border:0;border-radius:50px;padding:13px 28px;
+  color:white;background:linear-gradient(120deg,#f68bb7,#c36baf);
+  box-shadow:0 9px 22px #d879a644;font-size:15px;
+  transition:.25s;
+}
+.btn:hover {transform:translateY(-4px);box-shadow:0 13px 25px #d879a666}
+.btn.secondary {
+  background:#ffffffa8;color:#a94c7c;border:1px solid #f4c3d9;
+}
+.dots {display:flex;justify-content:center;gap:9px;margin-top:25px}
+.dot {width:8px;height:8px;border-radius:20px;background:#e7b5ce;transition:.3s}
+.dot.active {width:25px;background:#d76d9d}
+.tag {
+  display:inline-block;background:#fff9;padding:8px 17px;border-radius:30px;
+  color:#bd6590;font-size:13px;margin:5px;border:1px solid #fff;
+}
+.final-card {
+  padding:30px 22px;border-radius:30px;
+  background:linear-gradient(145deg,#ffffffbb,#ffe7f1bb);
+  box-shadow:0 15px 45px #bc6c9130;border:1px solid white;
+}
+footer {
+  position:relative;z-index:1;text-align:center;
+  padding:15px;color:#bc83a0;font-size:12px;
+}
+</style>
+</head>
+
+<body>
+<div class="background" id="background"></div>
+
+<header>
+  <div class="brand">A LITTLE WORLD FOR <span>INÈS</span></div>
+  <div class="progress"><div class="progress-fill" id="progress"></div></div>
+</header>
+
+<main>
+
+<!-- المشهد الأول -->
+<section class="scene active">
+  <div class="number">01 — A LITTLE INTRODUCTION</div>
+  <div class="art">
+    <img src="kitty1.png" alt="Hello Kitty"
+    onerror="this.style.display='none';this.parentElement.insertAdjacentHTML('beforeend','<span style=&quot;font-size:90px&quot;>🎀</span>')">
+  </div>
+  <h1>أهلًا يا إيناس 🎀</h1>
+  <p class="subtitle">WELCOME TO YOUR LITTLE WORLD</p>
+  <p class="description">
+    صنعت لكِ مساحة صغيرة<br>
+    تشبه الأشياء اللطيفة التي تستحق أن نبتسم من أجلها.
+  </p>
+  <div class="actions">
+    <button class="btn" onclick="next()">لنبدأ الحكاية ✨</button>
+  </div>
+</section>
+
+<!-- المشهد الثاني -->
+<section class="scene">
+  <div class="number">02 — YOUR BEAUTY</div>
+  <div class="art">
+    <img src="kitty2.png" alt="Hello Kitty">
+  </div>
+  <h2>جمالكِ له حكاية 🌷</h2>
+  <p class="description">
+    فيكِ جمال هادئ لا يحتاج إلى لفت الانتباه،
+    وملامح لطيفة تجعل حضوركِ مميزًا.
+    <strong>جمالٌ بسيط، لكنه يترك انطباعًا جميلًا.</strong>
+  </p>
+  <div class="actions">
+    <button class="btn" onclick="next()">التالي 💗</button>
+  </div>
+</section>
+
+<!-- المشهد الثالث -->
+<section class="scene">
+  <div class="number">03 — YOUR HEART</div>
+  <div class="art">
+    <img src="kitty3.png" alt="Hello Kitty">
+  </div>
+  <h2>أما قلبكِ... 🤍</h2>
+  <p class="description">
+    فأجمل ما فيكِ ليس جمالكِ وحده،
+    بل طيبة قلبكِ ورقتكِ وحساسيتكِ.
+    لديكِ لطف يجعل التفاصيل الصغيرة فيكِ جميلة.
+  </p>
+  <div class="actions">
+    <button class="btn" onclick="next()">أكملي 🌸</button>
+  </div>
+</section>
+
+<!-- المشهد الرابع -->
+<section class="scene">
+  <div class="number">04 — A LITTLE APOLOGY</div>
+  <div class="art">
+    <img src="kitty4.png" alt="Hello Kitty">
+  </div>
+  <h2>وأريد أن أقول لكِ شيئًا 💌</h2>
+  <p class="description">
+    آسف يا إيناس لأنني لم أنتبه لحادثكِ
+    كما ينبغي، ولم أركز معكِ في تلك اللحظة.
+    لم يكن ذلك تجاهلًا أو قلة اهتمام،
+    وأتمنى حقًا أن تكوني بخير وألا يكون قد أصابكِ مكروه.
+  </p>
+  <div class="actions">
+    <button class="btn" onclick="next()">المفاجأة الأخيرة ✨</button>
+  </div>
+</section>
+
+<!-- المشهد الخامس -->
+<section class="scene">
+  <div class="number">05 — MY BUBBLES</div>
+  <div class="art">
+    <img src="kitty5.png" alt="Hello Kitty">
+  </div>
+  <div class="final-card">
+    <h1>My Bubbles 🫧</h1>
+    <p class="subtitle">A LITTLE NAME FOR A LOVELY PERSON</p>
+    <p class="description">
+      إيناس، أنتِ إنسانة رائعة فعلًا.
+      جميلة بروحكِ، طيبة بقلبكِ،
+      حساسة بمشاعركِ، ولطيفة بتفاصيلكِ.
+      <br><strong>أتمنى أن تبقي دائمًا كما أنتِ،
+      وأن تكون أيامكِ مليئة بالفرح والابتسامات.</strong>
+    </p>
+    <div style="margin-top:20px">
+      <span class="tag">Kind Heart 🤍</span>
+      <span class="tag">Beautiful Soul 🌷</span>
+      <span class="tag">My Bubbles 🫧</span>
+    </div>
+  </div>
+  <div class="actions">
+    <button class="btn" onclick="celebrate()">اصنعي ابتسامة 🫧</button>
+    <button class="btn secondary" onclick="restart()">إعادة الرحلة ↻</button>
+  </div>
+</section>
+
+</main>
+
+<div class="dots" id="dots">
+  <span class="dot active"></span>
+  <span class="dot"></span>
+  <span class="dot"></span>
+  <span class="dot"></span>
+  <span class="dot"></span>
+</div>
+
+<footer>Made with kindness, just for Inès ♡</footer>
+
+<script>
+let current = 0;
+const scenes = document.querySelectorAll('.scene');
+const dots = document.querySelectorAll('.dot');
+const progress = document.getElementById('progress');
+
+function showScene(index) {
+  scenes[current].classList.remove('active');
+  dots[current].classList.remove('active');
+  current = index;
+  scenes[current].classList.add('active');
+  dots[current].classList.add('active');
+  progress.style.width = ((current + 1) * 20) + '%';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function next() {
+  if (current < scenes.length - 1) showScene(current + 1);
+}
+
+function restart() {
+  showScene(0);
+}
+
+function celebrate() {
+  for(let i=0;i<55;i++) {
+    setTimeout(makeBubble,i*45);
+  }
+}
+
+function makeBubble() {
+  const b = document.createElement('div');
+  b.className = 'bubble';
+  const size = 10 + Math.random()*35;
+  b.style.width = size+'px';
+  b.style.height = size+'px';
+  b.style.left = Math.random()*100+'vw';
+  b.style.animationDuration = (3+Math.random()*4)+'s';
+  document.getElementById('background').appendChild(b);
+  setTimeout(()=>b.remove(),8000);
+}
+
+// فقاعات متحركة في الخلفية
+for(let i=0;i<18;i++) {
+  setTimeout(makeBubble,i*250);
+}
+</script>
+</body>
+</html>
